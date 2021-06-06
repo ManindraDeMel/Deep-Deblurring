@@ -16,7 +16,8 @@ layers = [width, int(width/2), width] # The first and last elements are input an
 learning_rate = 3
 
 NeuralNetwork = Network(layers, learning_rate) # Parameters we can change: Number of Hidden Layers, Learning rate. 
-# So below we're passing several different inputs to the network. We first dataSet_inputs which is an array of images. We then train the 
+
+# Below we're passing several different inputs to the network. We first dataSet_inputs which is an array of images. We then train the 
 # network on each image by splitting the images in rows equivalent to its length (due to how they're read by the readImage() function). For example,
 # if we have an image with the specified dimensions of 1920 x 1080 the network would be given 1920 inputs and iterate over different 1920 inputs 1080 times.
 # This allows more training data and less need to generate an extremely large amount of weights and biases 

@@ -29,7 +29,7 @@ class Network:
             self.readParameters(CONST_PARAMETERS_PATH)
         else:
             self.generateWeightsAndBiases() 
- # If we've already trained the network and simply just want to de-blur images we can just read the weights written to a file after a training session
+    # If we've already trained the network and simply just want to de-blur images we can just read the weights written to a file after a training session
             
     # The method below is actually crucial to the network. By generating these random weights and biases it determines what local minimum the network
     # will eventually converge to. Some training sessions might start extremely lucky with a low cost, whilst more realistically the network starts off
@@ -66,24 +66,29 @@ class Network:
             for node in self.layers[layer]:
                 node.calculate_activation(self.layers[layer - 1])
 
+    # In backpropgation we're going to calculate the cost (the difference between the network output and the expected outputs). We then take this cost
+    # for each neuron in the output layer and then traverse back into the hidden layers. In the hidden layers we find the derivative with 
+    # respect to the derivative of the activation (The sum of the weights and previous inputs plus some bias passed through sigmoid)
+    # Then we finally calculate what each weight's contribution to the cost of the network.
+
     def backPropagate(self, expected):
         for i in reversed(range(len(self.layers))): # reversing the layers to start from the output layer since we're spreading the error out from the last layer backwards
             layer = self.layers[i]
             deltas = []
             if i == len(self.layers) - 1: # If this is the first iteration (output layer) then we find the cost of the network between the expected output and the network's output
                 for j in range(len(layer)):
-                    deltas.append(2 * ((expected[j] / 255) - layer[j].activation))
+                    deltas.append(2 * ((expected[j] / 255) - layer[j].activation)) # This is the cost calculation 
 
             else: # otherwise for all the other layers find the respective error to the neuron's delta. The delta of which originated from the output layer
                 for j in range(len(layer)):
                     delta = 0.0
                     for neuron in self.layers[i + 1]:
-                        delta += (neuron.weights[j] * neuron.delta) # Sum each weight's effect on the error/delta on the proceeding layer's neurons
+                        delta += (neuron.weights[j] * neuron.delta) # Sum each weight's effect on the cost on the proceeding layer's neurons
                     deltas.append(delta)
             
             for j in range(len(layer)):
                 neuron = layer[j]
-                neuron.delta = deltas[j] * sigmoidPrime(neuron.activation) # calculate the delta for that neuron (z holder)
+                neuron.delta = deltas[j] * sigmoidPrime(neuron.activation) # calculate the cost for each neuron's activation 
 
     def updateNetwork(self): 
         # Update Weights and Biases of the network based on each neuron's delta
@@ -98,7 +103,10 @@ class Network:
     def learn(self, training_data, expected_data, n_epoch, t_epochs):
         for epoch in range(n_epoch): # A local epoch for each individual image
             for training_row in range(len(training_data)): # Training row is each pixel row of an image i.e 1920 pixels of a 1920 x 1080 image. Whilst len(training_data) is 1080
-                # Here we're just checking if the inputs we have fed to the network correspond with the network layers and sizes so it doesn't raise any errors later on
+                
+                # Here we're just checking if the inputs we have fed to the network correspond with the network layers and sizes so 
+                # it doesn't raise any errors later on
+                
                 if (len(training_data[training_row]) != self.layersizes[0]):
                     raise ValueError("input data and input length mismatch")
                 if (len(expected_data[training_row]) != self.layersizes[-1]):
@@ -106,15 +114,18 @@ class Network:
                 if (len(expected_data) != len(training_data)):
                     raise ValueError("Training data mismatch")
 
-                training_list = list(map(lambda x: x / 1, training_data[training_row])) # Here we are getting each pixel row of the image and then dividing it by 255 to make it between 0 - 1 (the same range as the network's output due to sigmoid)
+                # Here we are getting each pixel row of the image and then dividing it by 255 to make it between 0 - 1 
+                # (the same range as the network's output due to sigmoid)
+                
+                training_list = list(map(lambda x: x / 1, training_data[training_row])) 
                 self.forwardPropagate(training_list)
                 error = sum([((expected_data[training_row][i] / 255) - (self.layers[-1][i].activation))**2 for i in range(len(expected_data[training_row]))]) # This is the total error between the network's output and the answer 
                 self.backPropagate(expected_data[training_row])
                 self.updateNetwork()
                 print(f"Pixel Row: {training_row}, Error: {error}, Epoch: {epoch + 1}/{n_epoch}, Image: {t_epochs[0] + 1}/{t_epochs[1]}")
  ######################################################### Un-comment the encapsulated code if you want to visualize the data            
-                with open("data_visual/data.txt", "a+") as write_file: 
-                    write_file.write(f"{training_row}, {error}\n")
+                # with open("data_visual/data.txt", "a+") as write_file: 
+                #     write_file.write(f"{training_row}, {error}\n")
  #########################################################
     def run(self, image): # This method is used once the network has been trained so it can hopefully de-blur other images which it hasn't encountered before.
         last_layers = []
