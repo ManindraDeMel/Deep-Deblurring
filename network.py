@@ -60,7 +60,7 @@ class Network:
 
     def forwardPropagate(self, inputs): 
         if (self.layers[0][0].weights == None): # checking if there is still inputs from last iteration hanging around
-            self.layers.pop(0) 
+            self.layers.pop(0)
         self.layers.insert(0, [Neuron(activation = inputs[node_index]) for node_index in range(len(inputs))]) # Convert the inputs into neuron objects and insert it as the first layer in the network
         for layer in range(1, len(self.layers)): # now starting with the first hidden layer we can use the previous layer's activations, attached weights and biases to keep going forward in the network.
             for node in self.layers[layer]:
@@ -83,7 +83,7 @@ class Network:
             
             for j in range(len(layer)):
                 neuron = layer[j]
-                neuron.delta = deltas[j] * sigmoidPrime(neuron.activation) # calculate the delta for that neuron 
+                neuron.delta = deltas[j] * sigmoidPrime(neuron.activation) # calculate the delta for that neuron (z holder)
 
     def updateNetwork(self): 
         # Update Weights and Biases of the network based on each neuron's delta

@@ -1,12 +1,11 @@
-from os import read
 from network import *
 training_data_directory = r"blur_dataset_scaled/blurred" # The dataset for these images were sourced from https://www.kaggle.com/kwentar/blur-dataset
 training_expected_directory = r"blur_dataset_scaled/sharp"
 
 dataset_size = 184 # number of images in the dataset
-epochs = 1 # number of iterations through the dataset
+epochs = 10 # number of iterations through the dataset
 img_format = "jpg" # Image format of the dataset
-image_epoch = 2 # The amount of times the network trains on each image
+image_epoch = 3 # The amount of times the network trains on each image
 # Instantiate and set up the network with the given parameters 
 tmp_img = readImage(f"{training_data_directory}/0.{img_format}")
 width = tmp_img.shape[1] # Retrieve the width of the first image since all the images should be the same dimensions
