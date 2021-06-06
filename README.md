@@ -1,5 +1,5 @@
 ### Required modules, 
-# This dataset used to train the network: [I'm an inline-style link](https://www.kaggle.com/kwentar/blur-dataset)
+# This dataset used to train the network: [Deblurred dataset](https://www.kaggle.com/kwentar/blur-dataset)
 This program is written in python 3.8.0 and tested in 3.9.0.
 Modules required for this program to work are:
 ```
