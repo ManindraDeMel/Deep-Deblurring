@@ -16,6 +16,12 @@ layers = [width, int(width/2), width] # The first and last elements are input an
 learning_rate = 3
 
 NeuralNetwork = Network(layers, learning_rate) # Parameters we can change: Number of Hidden Layers, Learning rate. 
+# So below we're passing several different inputs to the network. We first dataSet_inputs which is an array of images. We then train the 
+# network on each image by splitting the images in rows equivalent to its length (due to how they're read by the readImage() function). For example,
+# if we have an image with the specified dimensions of 1920 x 1080 the network would be given 1920 inputs and iterate over different 1920 inputs 1080 times.
+# This allows more training data and less need to generate an extremely large amount of weights and biases 
+# (1920 x 1080 = 2 073 600 x 512 hidden layer nodes = 1 061 683 200 or roughly 1 billion weights for just the input -> first hidden layer weights)
+# Instead we only have (1920 x 512 = 983 040 weights for the inputs -> first hidden layer weights which is a significant decrease in storage)
 
 # Train the network
 for t_epochs in range(epochs): # A number of iterations or epochs through the training data,  # Take a certain amount of images for each epoch
@@ -29,40 +35,3 @@ NeuralNetwork.writeParameters(CONST_PARAMETERS_PATH) # After the network is done
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-# So below we're passing several different inputs to the network. We first dataSet_inputs which is an array of images. We then train the 
-# network on each image by splitting the images in rows equivalent to its length (due to how they're read by the readImage() function). For example,
-# if we have an image with the specified dimensions of 1920 x 1080 the network would be given 1920 inputs and iterate over different 1920 inputs 1080 times.
-# This allows more training data and less need to generate an extremely large amount of weights and biases 
-# (1920 x 1080 = 2 073 600 x 512 hidden layer nodes = 1 061 683 200 or roughly 1 billion weights for just the input -> first hidden layer weights)
-# Instead we only have (1920 x 512 = 983 040 weights for the inputs -> first hidden layer weights which is a significant decrease in storage)
-
-
-
-
-
-
-
-
-
-# dataSet_inputs = [
-#     [[134, 142], [243, 124]], #this is an image
-#     [[143, 65], [156, 234]], # this is another image
-# ]
-
-# dataSet_outputs = [
-#     [[243, 34], [12, 244]],
-#     [[89, 60], [93, 34]],
-# ]
-
-# NeuralNetwork = Network([2, 3, 3, 2], 0.3)

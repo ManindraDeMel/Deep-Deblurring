@@ -1,4 +1,4 @@
-# This code was used from: https://pythonprogramming.net/live-graphs-matplotlib-tutorial/ (whole file)
+# This code was sourced from: https://pythonprogramming.net/live-graphs-matplotlib-tutorial/ (whole file)
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 from matplotlib import style

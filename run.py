@@ -1,7 +1,7 @@
 from network import *
 
 #####
-blurred_img_path = r"blur_dataset_scaled/blurred/134.jpg"
+blurred_img_path = r"blur.jpg" # Path to the image that will be de-blurred
 #####
 
 image = readImage(blurred_img_path)
