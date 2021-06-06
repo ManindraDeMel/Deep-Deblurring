@@ -19,14 +19,14 @@ If you have wish to use the provided dataset to train the network, simply execut
 
 #### Train Network with a different dataset
 If you want to use a different dataset, you have to format the data to fit the networks input nodes. For instance, all images in both the blurred and sharpened datasets all need to be the same dimensions i.e (500 x 667). Futhermore, both datasets must have the same image format (.jpg, .png, .jpeg) must have their names in ascending order starting from 0 - the number of images in the set. If setting up the dataset is confusing or causing errors, referring to the provided data set in blur_dataset_scaled could prove useful. 
-
+![Running the algorithm](https://github.com/ManindraDeMel/Deep-Deblurring/blob/main/Screenshots/dataset_config_screenshot.png)
 
 ###### There is also an included formatting file that may be helpful found in: data formatting/format.py that resizes images and blurs images. For bulk renaming I recommend the Bulk renaming Utility to quickly rename all the images in ascending order.
 
 # Running the network
 Once the network has been trained, type the path of your blurred image in run.py (Ensure it is the same dimensions as the training images).
 Then once your execute the file you should see a file by the name of "Unblurred.jpg" in the root directory, this is the network's output of the un-blurred image. The output will also be in greyscale since the network does not support colour as of yet
-
+![Running the algorithm](https://github.com/ManindraDeMel/Deep-Deblurring/blob/main/Screenshots/How_to_deblur.png)
 ### This dataset used to train the network: [Deblurred dataset](https://www.kaggle.com/kwentar/blur-dataset)
 
 
